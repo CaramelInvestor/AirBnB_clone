@@ -39,7 +39,8 @@ class FileStorage:
             serialized_objects[key] = obj.to_dict()
 
         with open(FileStorage.__file_path, "w", encoding="utf-8") as f:
-            json.dump(serialized_objects, f)
+            # added indetentation
+            json.dump(serialized_objects, f, indent=4)
 
     def reload(self):
         """
@@ -54,7 +55,9 @@ class FileStorage:
 
             for key, value in data.items():
                 class_name, obj_id = key.split('.')
-                cls = getattr(__import__('models', fromlist=[class_name]),
+                
+                # corrected the imports in getattr too
+                cls = getattr(__import__('models.base_model', fromlist=[class_name]),
                               class_name, None)
                 if cls:
                     obj = cls(**value)

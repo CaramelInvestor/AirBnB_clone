@@ -5,8 +5,11 @@ This module defines a parent class
 
 import uuid
 from datetime import datetime
-from models import storage
 
+# changed import
+import models
+
+time_format = "%Y-%m-%dT%H:%M:%S.%f"
 
 class BaseModel:
     """
@@ -35,7 +38,7 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
 
-        storage.new(self)
+        models.storage.new(self)
 
     def __str__(self):
         """
@@ -53,7 +56,7 @@ class BaseModel:
         when an attribute is set
         """
         self.updated_at = datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
         """
@@ -62,8 +65,10 @@ class BaseModel:
         """
         class_name = self.__class__.__name__
         obj_id = self.id
-        attributes = self.__dict__
+        attributes = self.__dict__.copy()
 
+
+        
         attributes['created_at'] = self.created_at.isoformat()
         attributes['updated_at'] = self.updated_at.isoformat()
 
