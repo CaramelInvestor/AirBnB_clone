@@ -30,6 +30,26 @@ class HBNBCommand(cmd.Cmd):
         "Review"
     }
 
+    def custom_cmd(self, line):
+        """
+        custom command line
+        """
+        parts = line.split(".", 1)
+
+        if len(parts) != 2:
+            return cmd.Cmd.precmd(self, line)
+
+        classname, cmd_details = parts
+        cmd_name, details = cmd_details.split("(", 1)
+        details = details.rstrip(")").replace('"', '').split()
+
+        if 'update' in cmd_name:
+            id_, key, value = details
+            return f"{cmd_name} {classname} {id_} {key} {value}"
+        else:
+            return f"{cmd_name} {classname} {details}"
+
+
     def do_quit(self, line):
         """
         method to exit the program
@@ -222,6 +242,18 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     obj.__dict__[k] = v
         storage.save()
+
+    def do_count(self, arg):
+        """
+        Method's usage: count <class> or <class>.count()
+        Retrieve the number of instances of a given class
+        """
+        args = arg.split()
+        count = 0
+        for obj in storage.all().values():
+            if args[0] == obj.__class__.__name__:
+                count += 1
+        print(count)
 
 
 if __name__ == '__main__':
