@@ -1,0 +1,10 @@
+/* Applies to the entire body of the HTML document (except where overridden by more specific
+selectors). */
+body {
+	margin: 0;
+			padding: 0;
+			height: 100vh;
+			display: flex;
+			justify-content: space-between;
+			flex-direction: column;
+}

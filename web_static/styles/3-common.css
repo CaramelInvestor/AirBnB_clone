@@ -1,0 +1,9 @@
+/* Applies to the entire body of the HTML document (except where overridden by more specific
+selectors). */
+body {
+	margin: 0;
+	padding: 0;
+	color: #484848;
+	font-size: 14px;
+	font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;;
+}
